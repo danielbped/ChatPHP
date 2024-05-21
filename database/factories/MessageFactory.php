@@ -22,10 +22,13 @@ class MessageFactory extends Factory
      */
     public function definition()
     {
+        $conversation = Conversation::all()->random();
+
         return [
-            'conversation_id' => Conversation::factory(),
+            'conversation_id' => $conversation->id,
             'content' => $this->faker->sentence(),
             'response' => $this->faker->sentence(),
         ];
     }
 }
+
