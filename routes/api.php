@@ -7,13 +7,24 @@ use App\Http\Controllers\Api\V1\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function() {
-    Route::get('/health', [HealthController::class, 'index']);
-    Route::get('/conversation/user/{user}', [ConversationController::class, 'findByUser']);
-    // Route::get('/conversation', [UserController::class, 'index']);
-    // Route::get('/users/{user}', [UserController::class, 'show']);
-    // Route::get('/conversation', [ConversationController::class, 'index']);
-    // Route::get('/conversation/{conversation}', [ConversationController::class, 'show']);
-    // Route::get('/message', [MessageController::class, 'index']);
-    // Route::get('/message/{message}', [MessageController::class, 'show']);
+    Route::prefix('health')->group(function() {
+        Route::get('/', [HealthController::class, 'index']);
+    });
+
+    Route::prefix('conversation')->group(function() {
+        Route::get('/user/{user}', [ConversationController::class, 'findByUser']);
+        // Route::get('/', [ConversationController::class, 'index']);
+        // Route::get('/{conversation}', [ConversationController::class, 'show']);
+    });
+
+    Route::prefix('message')->group(function() {
+        // Route::get('/', [MessageController::class, 'index']);
+        // Route::get('/{message}', [MessageController::class, 'show']);
+    });
+
+    Route::prefix('users')->group(function() {
+        // Route::get('/{user}', [UserController::class, 'show']);
+        // Route::get('/', [UserController::class, 'index']);
+    });
 });
 
