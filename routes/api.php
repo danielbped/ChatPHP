@@ -19,7 +19,7 @@ Route::prefix('v1')->group(function() {
     });
 
     Route::prefix('message')->group(function() {
-        Route::post('/', [MessageController::class, 'store']);
+        Route::post('/conversation/{conversation}', [MessageController::class, 'store']);
         // Route::get('/', [MessageController::class, 'index']);
         // Route::get('/{message}', [MessageController::class, 'show']);
     });

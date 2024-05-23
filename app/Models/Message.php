@@ -9,6 +9,17 @@ class Message extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'content',
+        'conversation_id',
+        'response'
+    ];
+
     public function conversation()
     {
         return $this->belongsTo(Conversation::class);
