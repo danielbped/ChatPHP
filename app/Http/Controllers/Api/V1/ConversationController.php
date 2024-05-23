@@ -6,10 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\ConversationResource;
 use App\Models\Conversation;
 use App\Models\User;
+use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ConversationController extends Controller
 {
+    use HttpResponses;
     /**
      * Display a listing of the resource.
      */
@@ -19,19 +22,28 @@ class ConversationController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(User $user)
     {
-        //
+        $validator = Validator::make(['user' => $user, 'user_id' => $user->id], [
+            'user'=> 'required',
+            'user_id' => 'required|numeric|exists:users,id'
+        ]);
+
+        if ($validator->fails())
+        {
+            return $this->error('User not found.', 422, $validator->errors());
+        }
+
+        $created = Conversation::create($validator->validated());
+
+        if (!$created)
+        {
+            return $this->error('Conversation not created', 400);
+        }
+
+        return $this->response('Conversation created', 200, new ConversationResource($created->load('user')));
     }
 
     /**
@@ -49,14 +61,6 @@ class ConversationController extends Controller
     {
         $conversations = Conversation::where('user_id', $user->id)->get();
         return ConversationResource::collection($conversations);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
     }
 
     /**

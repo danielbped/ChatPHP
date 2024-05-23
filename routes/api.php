@@ -13,16 +13,19 @@ Route::prefix('v1')->group(function() {
 
     Route::prefix('conversation')->group(function() {
         Route::get('/user/{user}', [ConversationController::class, 'findByUser']);
+        Route::post('/user/{user}', [ConversationController::class, 'store']);
         // Route::get('/', [ConversationController::class, 'index']);
         // Route::get('/{conversation}', [ConversationController::class, 'show']);
     });
 
     Route::prefix('message')->group(function() {
+        Route::post('/', [MessageController::class, 'store']);
         // Route::get('/', [MessageController::class, 'index']);
         // Route::get('/{message}', [MessageController::class, 'show']);
     });
 
     Route::prefix('users')->group(function() {
+        Route::post('/', [UserController::class, 'store']);
         // Route::get('/{user}', [UserController::class, 'show']);
         // Route::get('/', [UserController::class, 'index']);
     });
