@@ -10,6 +10,3 @@ Route::get('/', function () {
 Route::get('/token', function () {
     return csrf_token();
 });
-
-Route::post('/user', [UserController::class, 'store']);
-
