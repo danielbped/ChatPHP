@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\ConversationResource;
 use App\Models\Conversation;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ConversationController extends Controller
@@ -39,6 +40,15 @@ class ConversationController extends Controller
     public function show(Conversation $conversation)
     {
         return new ConversationResource($conversation);
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function findByUser(User $user)
+    {
+        $conversations = Conversation::where('user_id', $user->id)->get();
+        return ConversationResource::collection($conversations);
     }
 
     /**
