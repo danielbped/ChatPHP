@@ -7,13 +7,12 @@ use App\Http\Controllers\Api\V1\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function() {
-    Route::prefix('health')->group(function() {
-        Route::get('/', [HealthController::class, 'index']);
-    });
+    Route::apiResource('/health', [HealthController::class]);
 
     Route::prefix('conversation')->group(function() {
         Route::get('/user/{user}', [ConversationController::class, 'findByUser']);
         Route::post('/user/{user}', [ConversationController::class, 'store']);
+        Route::delete('/{conversation}', [ConversationController::class, 'destroy']);
         // Route::get('/', [ConversationController::class, 'index']);
         // Route::get('/{conversation}', [ConversationController::class, 'show']);
     });

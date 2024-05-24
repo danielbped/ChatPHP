@@ -74,8 +74,15 @@ class ConversationController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Conversation $conversation)
     {
-        //
+        $deleted = $conversation->delete();
+
+        if (!$deleted)
+        {
+            return $this->error('Conversation not deleted', 400);
+        }
+
+        return $this->response('Conversation deleted', 200);
     }
 }
