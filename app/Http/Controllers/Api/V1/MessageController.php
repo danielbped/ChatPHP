@@ -33,7 +33,7 @@ class MessageController extends Controller
             'content' => 'required|min:3'
         ]);
 
-        if ($validator->fails())
+        if($validator->fails())
         {
             return $this->error('Conversation not found.', 422, $validator->errors());
         }

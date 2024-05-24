@@ -31,7 +31,7 @@ class ConversationController extends Controller
             'user_id' => 'required|numeric|exists:users,id'
         ]);
 
-        if ($validator->fails())
+        if($validator->fails())
         {
             return $this->error('User not found.', 422, $validator->errors());
         }
